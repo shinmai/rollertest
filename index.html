@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body { background: #fff; }
+		body.playing { background: #000; }
+	</style>
+</head>
+<body>
+	<h1 id="tm">Please wait..</h1>
+	<script type="text/javascript">
+		const audio_file = new Audio('roller.mp3'), tm = document.getElementById('tm')
+		audio_file.addEventListener('canplaythrough', function() {
+			document.addEventListener("click", handler)
+			tm.innerText = "click/tap me"
+		}, false)
+		audio_file.addEventListener('timeupdate', function() {
+		    if(this.currentTime > this.duration - .21){
+		        this.currentTime = .10
+		        this.play()
+		    }
+		}, false)
+		const handler = (e) =>  {
+			document.removeEventListener(e.type, handler)
+			audio_file.play()
+			tm.style.display = "none"
+			document.body.className = "playing"
+		}
+	</script>
+</body>
+</html>
